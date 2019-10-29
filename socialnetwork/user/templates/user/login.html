@@ -1,0 +1,38 @@
+{% extends "post/base.html"%}
+{% block body_content %}
+<div class="w3-card-4 w3-margin w3-white">
+    <div class="w3-container">
+        <h2> Log In </h2>
+    </div>
+
+    <div class="w3-container">
+
+    <form action=" {% url 'login' %}" method = 'POST'>
+		{% csrf_token %}
+		{{ form.as_p }}
+
+		<input type="submit" value="Login " id='login_form' >
+ 	</form>
+	</div>
+	<div class="w3-container">
+    	<p> Don't have one? Then <a href=" {% url 'SignUp' %}"> SIGN UP </a> </p>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+<script>
+  $("#login_form").on("click", function(e) {
+    var username = $("#username").val();
+    var password = $("#password").val();
+    $.post("/accounts/login/", {"username": username, "password": password})
+      .success(function(data) {
+        var token = data["token"];
+        document.cookie = 'token='+token+";path=/";
+        window.location.href = "{% url 'Posts' %}";
+      });
+  });
+</script>
+
+
+{% endblock body_content %}

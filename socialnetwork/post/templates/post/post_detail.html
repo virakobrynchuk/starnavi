@@ -1,0 +1,25 @@
+{% extends "post/base.html"%}
+    {% block page_content %}
+        <div class="w3-card-4 w3-margin w3-white">
+            <div class="w3-container">
+                <h3><b> {{ object.post_title }} </b></h3>
+                <h5> <span class="w3-opacity"> {{ object.creator }} </span></h5>
+                <h5> <span class="w3-opacity"> {{ object.pub_date | date:" j F Y, H.i " }} </span></h5>
+            </div>
+
+            <div class="w3-container">
+                <p> {{ object.post_text }} </p>
+                <div class="w3-row">
+                    <div class="w3-col m8 s12">
+                        <a href="#" onClick="document.getElementById('likebutton').submit()">Like </a> {{object.post_likes}}
+                        <form id="likebutton" method="POST" action="/user/{{ object.pk}}/like/">
+                            {% csrf_token %}
+                            <input type="hidden">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+  <hr>
+{% endblock page_content%}

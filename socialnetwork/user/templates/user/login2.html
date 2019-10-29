@@ -1,0 +1,24 @@
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+{% csrf_token %}
+<form action="/accounts/token/" method="post" >
+Username: <input type='text' name='username' id='username' />
+<br>
+Password: <input type='password' name='password' id='password' />
+<br>
+<!-- <button type ="submit" id='login_form' > Login </button> -->
+<input type="submit" value="Send" id='login_form' >
+</form>
+
+<script>
+  $("#login_form").on("click", function(e) {
+    var username = $("#username").val();
+    var password = $("#password").val();
+    $.post("/accounts/token/", {"username": username, "password": password})
+      .success(function(data) {
+        var token = data["token"];
+        document.cookie = 'token='+token+";path=/";
+        window.location.href = "/user/view_posts/";
+      });
+  });
+</script>

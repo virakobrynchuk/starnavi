@@ -1,0 +1,51 @@
+{% extends "post/base.html"%}
+    {% block page_content %}
+  <!-- Blog entry -->
+        {% if latest_posts  %}
+            {% for p in latest_posts %}
+                <div class="w3-card-4 w3-margin w3-white">
+                    <div class="w3-container">
+                        <h3><b> {{ p.post_title }} </b></h3>
+                     <h5> <span class="w3-opacity"> {{ p.creator }} </span></h5>
+                     <h5> <span class="w3-opacity"> {{ p.pub_date | date:" j F Y, H.i " }} </span></h5>
+                    </div>
+
+                    <div class="w3-container">
+                     <p> {{ p.post_text }} </p>
+                        <div class="w3-row">
+                            <div class="w3-col m8 s12">
+                                <p> <a href="{% url 'LikePost' p.pk %}" > Like </a>  <span class="w3-badge"> {{p.post_likes}} </span> </p>
+                                <form id="likebutton" method="POST" action="/user/{{ p.pk}}/like/">
+                                    {% csrf_token %}
+                                     <input type="hidden">
+                                </form>
+                            </div>
+                            <div class="w3-col m4 w3-hide-small">
+                                <p> <span class="w3-padding-large w3-right"> <a href="{% url 'UnlikePost' p.pk %}" > Unlike </a> </span></p>
+                            </div>
+
+                            </div>
+                        </div>
+                    </div>
+            {% endfor %}
+            {% if is_paginated %}
+                {% if page_obj.has_previous %}
+                    <button class="w3-button w3-black w3-padding-large w3-margin-bottom"> <a href = "?page={{ page_obj.previous_page_number}}"> Previous </a></button>
+                {% else %}
+                    <button class="w3-button w3-black w3-disabled w3-padding-large w3-margin-bottom">Previous</button>
+                {% endif %}
+
+                {% if page_obj.has_next %}
+                    <button class="w3-button w3-black w3-padding-large w3-margin-bottom"><a href = "?page={{ page_obj.next_page_number}}"> Next </a></button>
+                {% else %}
+                    <button class="w3-button w3-black w3-disabled w3-padding-large w3-margin-bottom">Next</button>
+                {% endif %}
+            {% endif %}
+        {% else %}
+            <div class="w3-card-4 w3-margin w3-white">
+            <h3>No posts are available.</h3>
+            </div>
+        {% endif %}
+
+  <hr>
+{% endblock page_content%}

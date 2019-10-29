@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+  <body class="w3-container w3-pale-yellow">
+    <div class="w3-content" style="max-width:1400px">
+      {% block body_content %}
+        <div class="w3-row">
+          <div class="w3-col l8 s12">
+            {% block page_content %}
+            {% endblock page_content%}
+          </div>
+          <div class="w3-col l4">
+            <div class="w3-card w3-margin w3-margin-top">
+              <div class="w3-container w3-white">
+              </div>
+            </div>
+            <ul class="w3-ul w3-hoverable w3-white">
+              <li class="w3-padding-16">
+                <span class="w3-large"> <a href="{% url 'Posts' %}"> View posts </a></span><br>
+              </li>
+              <li class="w3-padding-16">
+                <span class="w3-large"> <a href="{% url 'CreatePost' %}"> Create post </a></span><br>
+              </li>
+              <li class="w3-padding-16">
+                <span class="w3-large"><a href="{% url 'LogOut' %}"> Logout </a></span><br>
+              </li>
+            </ul>
+          </div><hr>
+        </div>
+    </div><br>
+{% endblock body_content %}
+  </body>
+</html>
